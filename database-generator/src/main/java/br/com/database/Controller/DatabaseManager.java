@@ -5,36 +5,37 @@ import br.com.database.Config.DatabaseConnection;
 import br.com.database.Model.Database;
 import br.com.database.Model.Field;
 import br.com.database.Model.Table;
+
+import java.sql.Connection;
 import java.sql.SQLException;
 
 public class DatabaseManager {
 
-    // public void configureDadabase(String user, String password, String host, String port) {
-    //     DataBaseConfig.init(user, password, host, port);
-    // }
+    public void configureDadabase(String user, String password, String host, String port) {
+        DataBaseConfig.init(user, password, host, port);
+    }
 
-    // public void createDatabase(String databaseName) {
-    //     Database db = new Database(databaseName);
-    // }
+    public void createDatabase(String databaseName) {
+        Database db = new Database(databaseName);
+    }
 
-    // public void createTable(String tableName) {
-    //     Table table = new Table(tableName);
-    // }
+    public void createTable(String tableName) {
+        Table table = new Table(tableName);
+    }
 
 
-    // public void createField(Table table, String fieldName, String fieldType) {
-    //     Field field = new Field(fieldName, fieldType);
-    //     table.addField(field);
-    // }
+    public void createField(Table table, String fieldName, String fieldType) {
+        Field field = new Field(fieldName, fieldType);
+        table.addField(field);
+    }
 
-    // public void generateScript(Database db) {
-    //     ScriptGenerator sg = new ScriptGenerator();
-    //     sg.generateScript(db);
-    // }
+    public void generateScript(Database db) {
+        ScriptGenerator.generateScript(db);
+    }
 
-    // public void executeStricpt() {
-
-    // }
+    public void executeStricpt() {
+        ScriptGenerator.executeScript(DatabaseConnection.getInstance().getConnection());
+    }
 
     public static void main(String[] args) {
         

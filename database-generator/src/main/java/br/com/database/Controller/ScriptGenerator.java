@@ -13,13 +13,13 @@ import java.sql.Statement;
 
 public class ScriptGenerator {
 
-    String filePath = "/home/yohanes/Default/projetos.POO/databaseGenerator/database-generator/database-generator/src/main/java/br/com/database/Sql/script.sql";
+    static String filePath = "/home/yohanes/Default/projetos.POO/databaseGenerator/database-generator/database-generator/src/main/java/br/com/database/Sql/script.sql";
 
-    public String createDataBase(Database database) {
+    public static String createDataBase(Database database) {
         return "CREATE DATABASE IF NOT EXISTS " + database.getName() + ";";
     }
 
-    public String createTable(Table table) {
+    public static String createTable(Table table) {
         StringBuilder sb = new StringBuilder();
         sb.append("CREATE TABLE ").append(table.getName()).append(" (");
 
@@ -32,15 +32,15 @@ public class ScriptGenerator {
         return sb.toString();
     }
 
-    public String createField(Table table, Field field) {
+    public static String createField(Table table, Field field) {
         return "ALTER TABLE " + table.getName() + " ADD " + field.getName() + " " + field.getType() + ";";
     }
 
-    public String selectDataBase(Database database) {
+    public static String selectDataBase(Database database) {
         return "USE " + database.getName() + ";";
     }
 
-    public void generateScript(Database database) {
+    public static void generateScript(Database database) {
         try (FileWriter writer = new FileWriter(filePath)) {
            
             writer.write(createDataBase(database) + "\n");
@@ -57,7 +57,7 @@ public class ScriptGenerator {
 
     }
 
-    public void executeScript(Connection connection) {
+    public static void executeScript(Connection connection) {
         try {
             String script = new String(Files.readAllBytes(Paths.get(filePath)));
             Statement statement = connection.createStatement();
