@@ -1,18 +1,19 @@
 package br.com.database.Controller;
 
-import br.com.database.Config.DataBaseConfig;
+import br.com.database.Config.DatabaseConfig;
 import br.com.database.Config.DatabaseConnection;
+import br.com.database.Config.DatabaseConnectionFactory;
+import br.com.database.Config.DatabaseType;
 import br.com.database.Model.Database;
 import br.com.database.Model.Field;
 import br.com.database.Model.Table;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 
 public class DatabaseManager {
 
-    public void configureDadabase(String user, String password, String host, String port) {
-        DataBaseConfig.init(user, password, host, port);
+    public void configureDadabase(DatabaseType databaseType,String user, String password, String host, String port) {
+        DatabaseConfig.init(databaseType, user, password, host, port);
     }
 
     public void createDatabase(String databaseName) {
@@ -33,16 +34,16 @@ public class DatabaseManager {
         ScriptGenerator.generateScript(db);
     }
 
-    public void executeStricpt() {
-        ScriptGenerator.executeScript(DatabaseConnection.getInstance().getConnection());
+    public void executeStricpt() throws SQLException {
+        ScriptGenerator.executeScript(DatabaseConnectionFactory.getInstance().getConnection());
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         
         
-        DataBaseConfig.init("root", "1234", "localhost", "3306");
+        DatabaseConfig.init(DatabaseType.POSTGRESQL, "postgres", "123456", "172.18.150.143", "5432");
         
-        Database database = new Database("meuBanco");
+        Database database = new Database("teste1");
         
         
         Table table1 = new Table("minhaTabela");
@@ -61,12 +62,8 @@ public class DatabaseManager {
         ScriptGenerator scriptGenerator = new ScriptGenerator();
         scriptGenerator.generateScript(database);
         
-        scriptGenerator.executeScript(DatabaseConnection.getInstance().getConnection());
+        scriptGenerator.executeScript(DatabaseConnectionFactory.getInstance().getConnection());
         
-        // Fechar a conexão
-        
-        }
-
-            
     }
+}
 

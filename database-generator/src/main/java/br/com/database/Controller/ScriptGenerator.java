@@ -5,6 +5,7 @@ import br.com.database.Model.Field;
 import br.com.database.Model.Table;
 
 
+import java.io.File;
 import java.io.FileWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -13,10 +14,10 @@ import java.sql.Statement;
 
 public class ScriptGenerator {
 
-    static String filePath = "/home/yohanes/Default/projetos.POO/databaseGenerator/database-generator/database-generator/src/main/java/br/com/database/Sql/script.sql";
+    static String filePath = "script.sql";
 
     public static String createDataBase(Database database) {
-        return "CREATE DATABASE IF NOT EXISTS " + database.getName() + ";";
+        return "CREATE DATABASE " + database.getName() + ";";
     }
 
     public static String createTable(Table table) {
@@ -44,7 +45,7 @@ public class ScriptGenerator {
         try (FileWriter writer = new FileWriter(filePath)) {
            
             writer.write(createDataBase(database) + "\n");
-            writer.write(selectDataBase(database) + "\n");
+            // writer.write(selectDataBase(database) + "\n");
 
             for (Table table : database.getTables()) {
                 writer.write(createTable(table) + "\n");
