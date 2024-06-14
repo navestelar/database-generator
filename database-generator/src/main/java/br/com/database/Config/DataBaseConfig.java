@@ -1,95 +1,41 @@
 package br.com.database.Config;
 
-public class DataBaseConfig {
-
+public class DatabaseConfig {
+    private static DatabaseType databaseType;
     private static String user;
-    private static String password;
     private static String host;
     private static String port;
-    private static String database;
-    private static String url;
+    private static String password;
 
-    public static void init(String user, String password, String host, String port) {
-        DataBaseConfig.user = user;
-        DataBaseConfig.password = password;
-        DataBaseConfig.host = host;
-        DataBaseConfig.port = port;
-        DataBaseConfig.url = buildUrl();
+    public static void init(DatabaseType databaseType, String user, String password, String host, String port) {
+        DatabaseConfig.databaseType = databaseType;
+        DatabaseConfig.user = user;
+        DatabaseConfig.password = password;
+        DatabaseConfig.host = host;
+        DatabaseConfig.port = port;
     }
 
-
-    public static String buildUrl() {
-
-        StringBuilder sb = new StringBuilder();
-        sb.append("jdbc:mysql://");
-        sb.append(host).append(":"); 
-        sb.append(port); 
-
-        return sb.toString();
-
+    public static String getUrl(String driver) {
+        return driver + "://" + host + ":" + port + "/";
     }
 
+    public static DatabaseType getDatabaseType() {
+        return databaseType;
+    }
 
     public static String getUser() {
         return user;
     }
 
-
-    public static void setUser(String user) {
-        DataBaseConfig.user = user;
-    }
-
-
     public static String getPassword() {
         return password;
     }
-
-
-    public static void setPassword(String password) {
-        DataBaseConfig.password = password;
-    }
-
 
     public static String getHost() {
         return host;
     }
 
-
-    public static void setHost(String host) {
-        DataBaseConfig.host = host;
-    }
-
-
     public static String getPort() {
         return port;
     }
-
-
-    public static void setPort(String port) {
-        DataBaseConfig.port = port;
-    }
-
-
-    public static String getDatabase() {
-        return database;
-    }
-
-
-    public static void setDatabase(String database) {
-        DataBaseConfig.database = database;
-    }
-
-
-    public static String getUrl() {
-        return url;
-    }
-
-
-    public static void setUrl(String url) {
-        DataBaseConfig.url = url;
-    }
-
-    
-    
-    
 }
