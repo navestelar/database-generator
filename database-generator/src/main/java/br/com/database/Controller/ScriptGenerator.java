@@ -20,7 +20,7 @@ public class ScriptGenerator {
 
     public static String createTable(Table table) {
         StringBuilder sb = new StringBuilder();
-        sb.append("CREATE TABLE ").append(table.getName()).append(" (");
+        sb.append("CREATE TABLE IF NOT EXISTS ").append(table.getName()).append(" (");
 
         for (Field field : table.getFields()) {
             sb.append(field.getName()).append(" ").append(field.getType()).append(", ");

@@ -39,7 +39,7 @@ public class DatabaseManager {
     }
 
     public static void main(String[] args) throws SQLException {
-        DatabaseConfig.init(DatabaseType.MYSQL, "root", "1234", "localhost", "3306");
+        DatabaseConfig.init(DatabaseType.MYSQL, "root", "123456", "127.0.0.1", "3306");
         
         Database database = new Database("teste1");
         
@@ -53,14 +53,14 @@ public class DatabaseManager {
         Table table2 = new Table("outraTabela");
         table2.addField(new Field("codigo", "INT"));
         table2.addField(new Field("descricao", "VARCHAR(255)"));
-        
+
+        table2.addField(new Field("descricao2", "VARCHAR(255)"));
+
         database.addTable(table2);
+
+        ScriptGenerator.generateScript(database);
         
-        
-        ScriptGenerator scriptGenerator = new ScriptGenerator();
-        scriptGenerator.generateScript(database);
-        
-        scriptGenerator.executeScript(DatabaseConnectionFactory.getInstance().getConnection());
+        ScriptGenerator.executeScript(DatabaseConnectionFactory.getInstance().getConnection());
         
     }
 }
