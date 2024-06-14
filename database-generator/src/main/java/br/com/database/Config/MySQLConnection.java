@@ -10,7 +10,7 @@ public class MySQLConnection implements DatabaseConnection {
 
     public MySQLConnection() throws SQLException {
         try {
-            Class.forName("org.mysql.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(DatabaseConfig.getUrl("jdbc:mysql"), DatabaseConfig.getUser(), DatabaseConfig.getPassword());
         } catch (ClassNotFoundException | SQLException e) {
             throw new SQLException("Error initializing MySQL connection", e);

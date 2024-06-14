@@ -4,8 +4,6 @@ import br.com.database.Model.Database;
 import br.com.database.Model.Field;
 import br.com.database.Model.Table;
 
-
-import java.io.File;
 import java.io.FileWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -45,7 +43,7 @@ public class ScriptGenerator {
         try (FileWriter writer = new FileWriter(filePath)) {
            
             writer.write(createDataBase(database) + "\n");
-            // writer.write(selectDataBase(database) + "\n");
+            writer.write(selectDataBase(database) + "\n");
 
             for (Table table : database.getTables()) {
                 writer.write(createTable(table) + "\n");

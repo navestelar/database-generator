@@ -16,7 +16,7 @@ public class DatabaseConfig {
     }
 
     public static String getUrl(String driver) {
-        return driver + "://" + host + ":" + port + "/";
+        return driver + "://" + host + ":" + port;
     }
 
     public static DatabaseType getDatabaseType() {

@@ -39,7 +39,7 @@ public class DatabaseManager {
     }
 
     public static void main(String[] args) throws SQLException {
-        DatabaseConfig.init(DatabaseType.POSTGRESQL, "postgres", "123456", "172.18.150.143", "5432");
+        DatabaseConfig.init(DatabaseType.MYSQL, "root", "1234", "localhost", "3306");
         
         Database database = new Database("teste1");
         
