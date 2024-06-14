@@ -17,14 +17,14 @@ public class ScriptGenerator {
     static String filePath = "script.sql";
 
     public static String createDataBase(Database database) {
-        return "CREATE DATABASE " + database.getName() + ";";
+        return "CREATE DATABASE IF NOT EXISTS " + database.getName() + ";";
     }
 
     public static String createTable(Table table) {
         StringBuilder sb = new StringBuilder();
         sb.append("CREATE TABLE ").append(table.getName()).append(" (");
 
-        for(Field field : table.getFields()) {
+        for (Field field : table.getFields()) {
             sb.append(field.getName()).append(" ").append(field.getType()).append(", ");
         }
 
@@ -55,7 +55,6 @@ public class ScriptGenerator {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     public static void executeScript(Connection connection) {
