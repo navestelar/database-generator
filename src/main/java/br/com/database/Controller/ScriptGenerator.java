@@ -5,9 +5,11 @@ import br.com.database.Model.Field;
 import br.com.database.Model.Table;
 
 import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 public class ScriptGenerator {
@@ -17,21 +19,48 @@ public class ScriptGenerator {
     public static String createDataBase(Database database) {
         return "CREATE DATABASE IF NOT EXISTS " + database.getName() + ";";
     }
+    
+    public static String createField(Field field) {
+         return field.getName() + " " + field.getType() + ", ";
+    }
 
-    public static String createTable(Table table) {
+    private static String addPrimaryKey(String primaryKey) {
+        return "PRIMARY KEY (" + primaryKey + "), ";
+    }
+
+    public static String createPrimaryKey(Table table) {
         StringBuilder sb = new StringBuilder();
-        sb.append("CREATE TABLE IF NOT EXISTS ").append(table.getName()).append(" (");
+        Field pk = table.getPrimaryKey();
 
-        for (Field field : table.getFields()) {
-            sb.append(field.getName()).append(" ").append(field.getType()).append(", ");
+        if (table.getPrimaryKey() != null) {
+            boolean tableHasPrimaryKey = table.getFields().contains(pk);
+
+            if (!tableHasPrimaryKey) {
+                sb.append(createField(pk));
+            }
+
+            sb.append(addPrimaryKey(pk.getName()));
         }
 
-        sb.setLength(sb.length() - 2);
-        sb.append(");");
         return sb.toString();
     }
 
-    public static String createField(Table table, Field field) {
+    public static String createTable(Table table) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("CREATE TABLE ").append(table.getName()).append(" (");
+
+            for (Field field : table.getFields()) {
+                sb.append(createField(field));
+            }
+
+            sb.append(createPrimaryKey(table));
+
+            sb.setLength(sb.length() - 2);
+            sb.append(");");
+            return sb.toString();
+    }
+
+    public static String updateField(Table table, Field field) {
         return "ALTER TABLE " + table.getName() + " ADD " + field.getName() + " " + field.getType() + ";";
     }
 
@@ -47,11 +76,10 @@ public class ScriptGenerator {
 
             for (Table table : database.getTables()) {
                 writer.write(createTable(table) + "\n");
-
             }
             
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         }
     }
 
@@ -64,8 +92,8 @@ public class ScriptGenerator {
                     statement.execute(sql.trim() + ";");
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException | IOException e) {
+            System.err.println(e.getMessage());
         }
     }
 }

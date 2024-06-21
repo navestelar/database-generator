@@ -25,6 +25,7 @@ public class Database {
     public List<Table> getTables() {
         return tables;
     }
+
     public void setTables(List<Table> tables) {
         this.tables = tables;
     }

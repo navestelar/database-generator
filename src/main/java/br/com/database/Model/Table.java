@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Table {
-
     private String name;
     private List<Field> fields = new ArrayList<>();
+    private Field primaryKey;
+
 
     public Table(String name) {
         this.name = name;
@@ -14,6 +15,10 @@ public class Table {
 
     public void addField(Field field) {
         fields.add(field);
+    }
+
+    public void addPrimaryKey(Field field) {
+        primaryKey = field;
     }
 
     public String getName() {
@@ -29,6 +34,7 @@ public class Table {
         this.fields = fields;
     }
 
-
-    
+    public Field getPrimaryKey() {
+        return primaryKey;
+    }
 }

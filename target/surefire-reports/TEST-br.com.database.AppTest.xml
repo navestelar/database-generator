@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="br.com.database.AppTest" time="0.021" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="br.com.database.AppTest" time="0.02" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="17"/>
     <property name="sun.cpu.isalist" value="amd64"/>
     <property name="sun.jnu.encoding" value="Cp1252"/>
-    <property name="java.class.path" value="C:\Users\acche\programacao\bcc\poo2\projetos\database-generator\database-generator\target\test-classes;C:\Users\acche\programacao\bcc\poo2\projetos\database-generator\database-generator\target\classes;C:\Users\acche\.m2\repository\com\mysql\mysql-connector-j\8.0.33\mysql-connector-j-8.0.33.jar;C:\Users\acche\.m2\repository\com\google\protobuf\protobuf-java\3.21.9\protobuf-java-3.21.9.jar;C:\Users\acche\.m2\repository\org\postgresql\postgresql\42.2.29\postgresql-42.2.29.jar;C:\Users\acche\.m2\repository\org\checkerframework\checker-qual\3.5.0\checker-qual-3.5.0.jar;C:\Users\acche\.m2\repository\junit\junit\4.11\junit-4.11.jar;C:\Users\acche\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;"/>
+    <property name="java.class.path" value="C:\Users\acche\programacao\bcc\poo2\projetos\database-generator\target\test-classes;C:\Users\acche\programacao\bcc\poo2\projetos\database-generator\target\classes;C:\Users\acche\.m2\repository\com\mysql\mysql-connector-j\8.0.33\mysql-connector-j-8.0.33.jar;C:\Users\acche\.m2\repository\com\google\protobuf\protobuf-java\3.21.9\protobuf-java-3.21.9.jar;C:\Users\acche\.m2\repository\org\postgresql\postgresql\42.2.29\postgresql-42.2.29.jar;C:\Users\acche\.m2\repository\org\checkerframework\checker-qual\3.5.0\checker-qual-3.5.0.jar;C:\Users\acche\.m2\repository\junit\junit\4.11\junit-4.11.jar;C:\Users\acche\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;"/>
     <property name="java.vm.vendor" value="Oracle Corporation"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="user.variant" value=""/>
@@ -15,9 +15,9 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="US"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-17\bin"/>
-    <property name="sun.java.command" value="C:\Users\acche\AppData\Local\Temp\surefire10989827195201789483\surefirebooter14009135078424969348.jar C:\Users\acche\AppData\Local\Temp\surefire10989827195201789483 2024-06-14T10-46-50_959-jvmRun1 surefire12758820550283379230tmp surefire_02245074449658232069tmp"/>
+    <property name="sun.java.command" value="C:\Users\acche\AppData\Local\Temp\surefire13358100969457885933\surefirebooter15858045030710891059.jar C:\Users\acche\AppData\Local\Temp\surefire13358100969457885933 2024-06-21T08-52-54_773-jvmRun1 surefire12941216427596420709tmp surefire_03475692014179319465tmp"/>
     <property name="jdk.debug" value="release"/>
-    <property name="surefire.test.class.path" value="C:\Users\acche\programacao\bcc\poo2\projetos\database-generator\database-generator\target\test-classes;C:\Users\acche\programacao\bcc\poo2\projetos\database-generator\database-generator\target\classes;C:\Users\acche\.m2\repository\com\mysql\mysql-connector-j\8.0.33\mysql-connector-j-8.0.33.jar;C:\Users\acche\.m2\repository\com\google\protobuf\protobuf-java\3.21.9\protobuf-java-3.21.9.jar;C:\Users\acche\.m2\repository\org\postgresql\postgresql\42.2.29\postgresql-42.2.29.jar;C:\Users\acche\.m2\repository\org\checkerframework\checker-qual\3.5.0\checker-qual-3.5.0.jar;C:\Users\acche\.m2\repository\junit\junit\4.11\junit-4.11.jar;C:\Users\acche\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;"/>
+    <property name="surefire.test.class.path" value="C:\Users\acche\programacao\bcc\poo2\projetos\database-generator\target\test-classes;C:\Users\acche\programacao\bcc\poo2\projetos\database-generator\target\classes;C:\Users\acche\.m2\repository\com\mysql\mysql-connector-j\8.0.33\mysql-connector-j-8.0.33.jar;C:\Users\acche\.m2\repository\com\google\protobuf\protobuf-java\3.21.9\protobuf-java-3.21.9.jar;C:\Users\acche\.m2\repository\org\postgresql\postgresql\42.2.29\postgresql-42.2.29.jar;C:\Users\acche\.m2\repository\org\checkerframework\checker-qual\3.5.0\checker-qual-3.5.0.jar;C:\Users\acche\.m2\repository\junit\junit\4.11\junit-4.11.jar;C:\Users\acche\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="C:\Users\acche"/>
     <property name="user.language" value="en"/>
@@ -25,12 +25,12 @@
     <property name="java.version.date" value="2023-01-17"/>
     <property name="java.home" value="C:\Program Files\Java\jdk-17"/>
     <property name="file.separator" value="\"/>
-    <property name="basedir" value="C:\Users\acche\programacao\bcc\poo2\projetos\database-generator\database-generator"/>
+    <property name="basedir" value="C:\Users\acche\programacao\bcc\poo2\projetos\database-generator"/>
     <property name="java.vm.compressedOopsMode" value="32-bit"/>
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\acche\AppData\Local\Temp\surefire10989827195201789483\surefirebooter14009135078424969348.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\acche\AppData\Local\Temp\surefire13358100969457885933\surefirebooter15858045030710891059.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="17.0.6+9-LTS-190"/>
@@ -44,7 +44,7 @@
     <property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/"/>
     <property name="java.io.tmpdir" value="C:\Users\acche\AppData\Local\Temp\"/>
     <property name="java.version" value="17.0.6"/>
-    <property name="user.dir" value="C:\Users\acche\programacao\bcc\poo2\projetos\database-generator\database-generator"/>
+    <property name="user.dir" value="C:\Users\acche\programacao\bcc\poo2\projetos\database-generator"/>
     <property name="os.arch" value="amd64"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
     <property name="sun.os.patch.level" value=""/>
@@ -56,5 +56,5 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="61.0"/>
   </properties>
-  <testcase name="shouldAnswerWithTrue" classname="br.com.database.AppTest" time="0.001"/>
+  <testcase name="shouldAnswerWithTrue" classname="br.com.database.AppTest" time="0"/>
 </testsuite>
