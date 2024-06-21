@@ -1,4 +1,0 @@
-CREATE DATABASE IF NOT EXISTS teste1;
-USE teste1;
-CREATE TABLE IF NOT EXISTS minhaTabela (id INT, nome VARCHAR(255));
-CREATE TABLE IF NOT EXISTS outraTabela (codigo INT, descricao VARCHAR(255), descricao2 VARCHAR(255));
