@@ -1,9 +1,6 @@
 package br.com.database.Controller;
 
-import br.com.database.Config.DatabaseConfig;
-import br.com.database.Config.DatabaseConnection;
-import br.com.database.Config.DatabaseConnectionFactory;
-import br.com.database.Config.DatabaseType;
+import br.com.database.Config.*;
 import br.com.database.Model.Database;
 import br.com.database.Model.Field;
 import br.com.database.Model.Table;
@@ -33,8 +30,9 @@ public class DatabaseManager {
         ScriptGenerator.generateScript(db);
     }
 
-    public static void executeStricpt() throws SQLException {
+    public static void executeScricpt() throws SQLException {
         ScriptGenerator.executeScript(DatabaseConnectionFactory.getInstance().getConnection());
+
     }
 }
 
