@@ -1,7 +1,5 @@
 package br.com.database.Controller;
 
-import br.com.database.Config.DatabaseConnection;
-import br.com.database.Config.DatabaseConnectionFactory;
 import br.com.database.Model.Table;
 import br.com.database.Model.Field;
 
