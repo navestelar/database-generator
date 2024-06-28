@@ -1,6 +1,7 @@
 package br.com.database.Controller;
 
 import br.com.database.Model.Database;
+import br.com.database.Model.FK;
 import br.com.database.Model.Field;
 import br.com.database.Model.Table;
 
@@ -11,6 +12,7 @@ import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 public class ScriptGenerator {
 
@@ -68,6 +70,32 @@ public class ScriptGenerator {
         return "USE " + database.getName() + ";";
     }
 
+    private static String createPk(Table table) {
+        StringBuilder sb = new StringBuilder();
+
+        List<FK> fkList = table.getFks();
+
+        if (fkList != null) {
+            for (FK fk : fkList) {
+                Field pkTable1 = fk.getTable().getPrimaryKey();
+                Field fieldFk = fk.getTable().getPrimaryKey();
+
+                if (pkTable1 != null && fieldFk != null && pkTable1.getName().equals(fieldFk.getName())) {
+                    sb.append(updateField(table, new Field(fk.getName(), fk.getField().getType())) + "\n");
+                    sb.append("ALTER TABLE ").append( table.getName())
+                            .append(" ADD CONSTRAINT ").append(fk.getName())
+                            .append(" FOREIGN KEY(").append(fk.getName())
+                            .append(") REFERENCES ").append(fk.getTable().getName())
+                            .append("(").append(fk.getField().getName()).append(");");
+                } else {
+                    System.out.println("O field deve ser uma pk");
+                }
+            }
+        }
+
+        return sb.toString();
+    }
+
     public static void generateScript(Database database) {
         try (FileWriter writer = new FileWriter(filePath)) {
            
@@ -77,7 +105,10 @@ public class ScriptGenerator {
             for (Table table : database.getTables()) {
                 writer.write(createTable(table) + "\n");
             }
-            
+
+            for (Table table : database.getTables()) {
+                writer.write(createPk(table) + "\n");
+            }
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }

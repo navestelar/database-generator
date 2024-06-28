@@ -21,18 +21,20 @@ public class Main {
         Field pk = new Field("id", FieldType.INT);
         table1.addField(new Field("nome", FieldType.VARCHAR));
         table1.addPrimaryKey(pk);
-        table1.addPrimaryKey(new Field("pk", FieldType.INT));
+//        table1.addPrimaryKey(new Field("pk", FieldType.INT));
         Field teste = new Field("teste",FieldType.VARCHAR);
 
         database.addTable(table1);
 
-        Table table2 = new Table("tabela2") ;
-        table2.addField(new Field("codigo", FieldType.INT));
+        Table table2 = new Table("tabela2");
+        Field field2 = new Field("codigo", FieldType.INT);
+        table2.addField(field2);
         table2.addField(new Field("descricao", FieldType.VARCHAR));
 
         table2.addField(new Field("descricao2", FieldType.VARCHAR));
 
         database.addTable(table2);
+        table2.addFk("fk", table1, pk);
 
         ScriptGenerator.generateScript(database);
         ScriptGenerator.executeScript(DatabaseConnectionFactory.getInstance().getConnection());

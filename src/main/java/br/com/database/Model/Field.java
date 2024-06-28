@@ -22,8 +22,4 @@ public class Field {
     public void setType(FieldType type) {
         this.type = type;
     }
-
-
-
-    
 }
