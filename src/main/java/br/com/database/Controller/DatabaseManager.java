@@ -3,6 +3,7 @@ package br.com.database.Controller;
 import br.com.database.Config.*;
 import br.com.database.Model.Database;
 import br.com.database.Model.Field;
+import br.com.database.Model.FieldType;
 import br.com.database.Model.Table;
 
 import java.sql.SQLException;
@@ -21,7 +22,7 @@ public class DatabaseManager {
         Table table = new Table(tableName);
     }
 
-    public static void createField(Table table, String name, String type) {
+    public static void createField(Table table, String name, FieldType type) {
         Field field = new Field(name, type);
         table.addField(field);
     }
