@@ -6,6 +6,7 @@ import br.com.database.Model.Field;
 import br.com.database.Model.FieldType;
 import br.com.database.Model.Table;
 
+
 import java.sql.SQLException;
 
 public class DatabaseManager {
@@ -26,6 +27,7 @@ public class DatabaseManager {
         Field field = new Field(name, type);
         table.addField(field);
     }
+
 
     public static void generateScript(Database db) {
         ScriptGenerator.generateScript(db);
