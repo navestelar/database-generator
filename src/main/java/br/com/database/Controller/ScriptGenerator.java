@@ -1,5 +1,7 @@
 package br.com.database.Controller;
 
+import br.com.database.Config.DatabaseConfig;
+import br.com.database.Config.MySQLConnection;
 import br.com.database.Model.Database;
 import br.com.database.Model.Field;
 import br.com.database.Model.Table;
@@ -8,7 +10,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -21,7 +22,7 @@ public class ScriptGenerator {
     }
     
     public static String createField(Field field) {
-         return field.getName() + " " + field.getType() + ", ";
+        return field.getName() + " " + field.getType() + ", ";
     }
 
     private static String addPrimaryKey(String primaryKey) {
@@ -83,10 +84,10 @@ public class ScriptGenerator {
         }
     }
 
-    public static void executeScript(Connection connection) {
+    public static void executeScript(DatabaseConfig dbconfig) {
         try {
             String script = new String(Files.readAllBytes(Paths.get(filePath)));
-            Statement statement = connection.createStatement();
+            Statement statement = MySQLConnection.getInstance(dbconfig).getConnection().createStatement();
             for (String sql : script.split(";")) {
                 if (!sql.trim().isEmpty()) {
                     statement.execute(sql.trim() + ";");

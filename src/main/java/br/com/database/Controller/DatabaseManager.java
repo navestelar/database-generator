@@ -10,32 +10,43 @@ import br.com.database.Model.Table;
 import java.sql.SQLException;
 
 public class DatabaseManager {
+    
+    private DatabaseConfig databaseConfig;
 
-    public static void configureDadabase(DatabaseType databaseType,String user, String password, String host, String port) {
-        DatabaseConfig.init(databaseType, user, password, host, port);
+    public DatabaseManager(DatabaseConfig config) {
+        this.databaseConfig = config;
     }
 
-    public static void createDatabase(String databaseName) {
+    public Database createDatabase(String databaseName) {
         Database db = new Database(databaseName);
+        return db;
     }
 
-    public static void createTable(String tableName) {
+    public Table createTable(String tableName) {
         Table table = new Table(tableName);
+        return table;
     }
 
-    public static void createField(Table table, String name, FieldType type) {
+    public Field createField(Table table, String name, FieldType type) {
         Field field = new Field(name, type);
         table.addField(field);
+        return field;
     }
 
+    public Field createField(Table table, String name, String type) {
+        Field field = new Field(name, type);
+        table.addField(field);
+        return field;
+    }
 
-    public static void generateScript(Database db) {
+    public void generateScript(Database db) {
         ScriptGenerator.generateScript(db);
     }
 
-    public static void executeScricpt() throws SQLException {
-        ScriptGenerator.executeScript(DatabaseConnectionFactory.getInstance().getConnection());
+    public void executeScricpt() throws SQLException {
+        ScriptGenerator.executeScript(databaseConfig);
 
     }
+
 }
 
