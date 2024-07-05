@@ -7,6 +7,7 @@ import br.com.database.Model.*;
 import java.sql.SQLException;
 
 public class DatabaseManager {
+    
     private DatabaseConfig databaseConfig;
     private Database database;
 
@@ -14,9 +15,8 @@ public class DatabaseManager {
         this.databaseConfig = config;
     }
 
-    public DatabaseManager createDatabase(String databaseName) {
-        database = new Database(databaseName);
-        return this;
+    public void createDatabase(String databaseName) {
+        this.database = new Database(databaseName);
     }
 
     public DatabaseManager createTable(String tableName) {
@@ -40,6 +40,17 @@ public class DatabaseManager {
         return this;
     }
 
+    public DatabaseManager addField(String tableName, String name, String type) {
+        Field field = new Field(name, type);
+        Table table = database.getTable(tableName);
+
+        if (table != null) {
+            table.addField(field);
+        }
+
+        return this;
+    }
+
     public DatabaseManager addPrimaryKey(String tableName, String name, FieldType type) {
         PrimaryKey primaryKey = new PrimaryKey(name, type);
         Table table = database.getTable(tableName);
@@ -51,8 +62,19 @@ public class DatabaseManager {
         return this;
     }
 
-    public void generateScript(Database db) {
-        ScriptGenerator.generateScript(db);
+    public DatabaseManager addPrimaryKey(String tableName, String name, String type) {
+        PrimaryKey primaryKey = new PrimaryKey(name, type);
+        Table table = database.getTable(tableName);
+
+        if (table != null) {
+            table.addPrimaryKey(primaryKey);
+        }
+
+        return this;
+    }
+
+    public void generateScript() {
+        ScriptGenerator.generateScript(database);
     }
 
     public void executeScript() throws SQLException {
