@@ -36,9 +36,7 @@ public class Main {
 
         //gerando e executando o script
         manager.generateScript(database);
-        manager.executeScricpt();
-
-    
+        manager.executeScript();
         
     }
 

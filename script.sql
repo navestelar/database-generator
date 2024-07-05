@@ -1,3 +1,4 @@
 CREATE DATABASE IF NOT EXISTS teste;
 USE teste;
-CREATE TABLE tabela1 (id INT, campo1 VARCHAR(20), campo2 VARCHAR(23), campo3 CHAR(2), PRIMARY KEY (id));
+CREATE TABLE IF NOT EXISTS tabela1 (id INT, campo1 VARCHAR(20), campo2 VARCHAR(23), campo3 CHAR(2), PRIMARY KEY (id));
+

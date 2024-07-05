@@ -2,9 +2,7 @@ package br.com.database.Controller;
 
 import br.com.database.Config.DatabaseConfig;
 import br.com.database.Config.MySQLConnection;
-import br.com.database.Model.Database;
-import br.com.database.Model.Field;
-import br.com.database.Model.Table;
+import br.com.database.Model.*;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -52,7 +50,7 @@ public class ScriptGenerator {
 
     public static String createTable(Table table) {
         StringBuilder sb = new StringBuilder();
-        sb.append("CREATE TABLE ").append(table.getName()).append(" (");
+        sb.append("CREATE TABLE IF NOT EXISTS ").append(table.getName()).append(" (");
 
         for (Field field : table.getFields()) {
             sb.append(createField(field));
@@ -109,8 +107,8 @@ public class ScriptGenerator {
             sb.append(createTable(tabela2));
         }
 
-        PK pk1 = tabela1.getPrimaryKey();
-        PK pk2 = tabela2.getPrimaryKey();
+        Field pk1 = tabela1.getPrimaryKey();
+        Field pk2 = tabela2.getPrimaryKey();
 
         if (pk1 != null && pk2 != null) {
             sb.append("CREATE TABLE IF NOT EXISTS ").append(name).append(" (\n")

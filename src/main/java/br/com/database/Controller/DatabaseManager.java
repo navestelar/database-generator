@@ -43,7 +43,7 @@ public class DatabaseManager {
         ScriptGenerator.generateScript(db);
     }
 
-    public void executeScricpt() throws SQLException {
+    public void executeScript() throws SQLException {
         ScriptGenerator.executeScript(databaseConfig);
 
     }
