@@ -26,8 +26,14 @@ public class Main {
                 .addField("tabela1", "campo3", FieldType.CHAR(2));
 
         //adicionando primary key
-        manager.addPrimaryKey("tabela1", "pk", FieldType.VARCHAR(20));
+        manager.addPrimaryKey("tabela1", "pk1", FieldType.VARCHAR(20));
 
+        manager.createTable("tabela2")
+                .addField("tabela2", "campo4", FieldType.CHAR(2))
+                .addPrimaryKey("tabela2", "pk2", FieldType.INT);
+
+        manager.addForeignKey("tabela1", "tabela2", "fk", "pk");
+        manager.createTabelaAssociativa("tabela1_tabela2", "tabela1", "tabela2");
 
         //gerando e executando o script
         manager.generateScript();

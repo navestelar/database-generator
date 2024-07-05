@@ -30,7 +30,8 @@ public class Database {
         tables.add(table);
     }
 
-    public void addTabelaAssociativa(TabelaAssociativa tabelaAssociativa) {
+    public void addTabelaAssociativa(String name, Table tabela1, Table tabela2) {
+        TabelaAssociativa tabelaAssociativa = new TabelaAssociativa(name, tabela1, tabela2);
         tabelaAssociativas.add(tabelaAssociativa);
     }
 

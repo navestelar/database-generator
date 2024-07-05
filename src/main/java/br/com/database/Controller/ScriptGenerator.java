@@ -50,16 +50,20 @@ public class ScriptGenerator {
 
     public static String createTable(Table table) {
         StringBuilder sb = new StringBuilder();
-        sb.append("CREATE TABLE IF NOT EXISTS ").append(table.getName()).append(" (");
 
-        for (Field field : table.getFields()) {
-            sb.append(createField(field));
+        if (table != null && !table.getFields().isEmpty()) {
+            sb.append("CREATE TABLE IF NOT EXISTS ").append(table.getName()).append(" (");
+
+            for (Field field : table.getFields()) {
+                sb.append(createField(field));
+            }
+
+            sb.append(createPrimaryKey(table));
+
+            sb.setLength(sb.length() - 2);
+            sb.append(");");
         }
 
-        sb.append(createPrimaryKey(table));
-
-        sb.setLength(sb.length() - 2);
-        sb.append(");");
         return sb.toString();
     }
 

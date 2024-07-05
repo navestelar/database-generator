@@ -13,11 +13,21 @@ public class Table {
         this.name = name;
     }
 
+    public Field getField(String fieldName) {
+        for (Field field : fields) {
+            if (field.getName().equals(fieldName)) {
+                return field;
+            }
+        }
+
+        return null;
+    }
+
     public void addField(Field field) {
         fields.add(field);
     }
 
-    public void addFk(String name, Table table, Field field) {
+    public void addForeignKey(String name, Table table, Field field) {
         ForeignKey foreignKey = new ForeignKey(name, table, field);
         foreignKeys.add(foreignKey);
     }
