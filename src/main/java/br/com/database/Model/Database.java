@@ -4,9 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Database {
-
     private String name;
     private List<Table> tables = new ArrayList<>();
+    private List<TabelaAssociativa> tabelaAssociativas = new ArrayList<>();
+
+    public boolean containsTable(Table table) {
+        return tables.contains(table);
+    }
+
+    public Table getTable(String tableName) {
+        for (Table table : tables) {
+            if (table.getName().equals(tableName)) {
+                return table;
+            }
+        }
+
+        return null;
+    }
 
     public Database(String name) {
         this.name = name;
@@ -14,6 +28,11 @@ public class Database {
 
     public void addTable(Table table) {
         tables.add(table);
+    }
+
+    public void addTabelaAssociativa(String name, Table tabela1, Table tabela2) {
+        TabelaAssociativa tabelaAssociativa = new TabelaAssociativa(name, tabela1, tabela2);
+        tabelaAssociativas.add(tabelaAssociativa);
     }
 
     public String getName() {
@@ -24,6 +43,14 @@ public class Database {
     }
     public List<Table> getTables() {
         return tables;
+    }
+
+    public List<TabelaAssociativa> getTabelaAssociativas() {
+        return tabelaAssociativas;
+    }
+
+    public void setTabelaAssociativas(List<TabelaAssociativa> tabelaAssociativas) {
+        this.tabelaAssociativas = tabelaAssociativas;
     }
 
     public void setTables(List<Table> tables) {

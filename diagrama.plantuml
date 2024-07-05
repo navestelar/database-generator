@@ -1,0 +1,50 @@
+@startuml Diagrama
+  class Database {
+    -String Name
+    -List<Table> tables
+    -List<TabelaAssociativa> tabelasAssociativas
+
+    +void addTable(table: Table)
+    +void addTabelaAssociativa(tabela: TabelaAssociativa)
+  }
+
+  class Field {
+    -String name
+    -String type
+  }
+
+  class ForeingKey {
+    -String name
+    -Table table
+    -Field field
+  }
+
+  class PrimaryKey {
+    -String name
+    -String type
+  }
+
+  class TabelaAssociativa {
+    -String name
+    -Table tabela1
+    -Table tabela2
+  }
+
+  class Table {
+    -String name
+    -List<Field> fields
+    -PrimaryKey primaryKey
+    -List<ForeingKey> foreingKeys
+
+    +void addField(field: Field)
+    +void addForeingKey(field: ForeingKey)
+  }
+
+  Database "1" *-- "*" Table : contém
+  Database "1" *-- "*" TabelaAssociativa : contém
+  Table "1" *-- "*" Field : contém
+  Table "1" *-- "1" PrimaryKey : contém
+  Table "1" *-- "*" ForeingKey : contém
+  TabelaAssociativa "1" o-- "1" Table : contém
+  TabelaAssociativa "1" o-- "1" Table : contém
+@enduml

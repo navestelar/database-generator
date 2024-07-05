@@ -35,10 +35,4 @@ public class Field {
     public void setType(String type) {
         this.type = type;
     }
-
-
-    
-
-    
-
 }
