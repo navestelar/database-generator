@@ -1,7 +1,14 @@
 CREATE DATABASE IF NOT EXISTS teste;
 USE teste;
 CREATE TABLE tabela1 (nome VARCHAR(255), id INT, PRIMARY KEY (id));
-CREATE TABLE tabela2 (codigo INT, descricao VARCHAR(255), descricao2 VARCHAR(255));
+CREATE TABLE tabela2 (codigo INT, descricao VARCHAR(255), descricao2 VARCHAR(255), pk INT, PRIMARY KEY (pk));
 
 ALTER TABLE tabela2 ADD fk INT;
-ALTER TABLE tabela2 ADD CONSTRAINT fk FOREIGN KEY(fk) REFERENCES tabela1(id);
+ALTER TABLE tabela2 ADD CONSTRAINT fk FOREIGN KEY (fk) REFERENCES tabela1 (id);
+CREATE TABLE IF NOT EXISTS teste (
+id INT, 
+pk INT, 
+FOREIGN KEY (id) REFERENCES tabela1 (id),
+FOREIGN KEY (pk) REFERENCES tabela2 (pk),
+PRIMARY KEY (id, pk)
+);

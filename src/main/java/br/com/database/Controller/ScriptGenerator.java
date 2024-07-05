@@ -1,9 +1,6 @@
 package br.com.database.Controller;
 
-import br.com.database.Model.Database;
-import br.com.database.Model.FK;
-import br.com.database.Model.Field;
-import br.com.database.Model.Table;
+import br.com.database.Model.*;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -15,7 +12,6 @@ import java.sql.Statement;
 import java.util.List;
 
 public class ScriptGenerator {
-
     static String filePath = "script.sql";
 
     public static String createDataBase(Database database) {
@@ -28,6 +24,10 @@ public class ScriptGenerator {
 
     private static String addPrimaryKey(String primaryKey) {
         return "PRIMARY KEY (" + primaryKey + "), ";
+    }
+
+    private static String addForeignKey(String name, String table, String field) {
+        return "FOREIGN KEY (" + name + ")" + " REFERENCES " + table + " (" + field + ")";
     }
 
     public static String createPrimaryKey(Table table) {
@@ -70,7 +70,7 @@ public class ScriptGenerator {
         return "USE " + database.getName() + ";";
     }
 
-    private static String createPk(Table table) {
+    private static String createFk(Table table) {
         StringBuilder sb = new StringBuilder();
 
         List<FK> fkList = table.getFks();
@@ -83,15 +83,43 @@ public class ScriptGenerator {
                 if (pkTable1 != null && fieldFk != null && pkTable1.getName().equals(fieldFk.getName())) {
                     sb.append(updateField(table, new Field(fk.getName(), fk.getField().getType())) + "\n");
                     sb.append("ALTER TABLE ").append( table.getName())
-                            .append(" ADD CONSTRAINT ").append(fk.getName())
-                            .append(" FOREIGN KEY(").append(fk.getName())
-                            .append(") REFERENCES ").append(fk.getTable().getName())
-                            .append("(").append(fk.getField().getName()).append(");");
+                            .append(" ADD CONSTRAINT ").append(fk.getName()).append(" ")
+                            .append(addForeignKey(fk.getName(), fk.getTable().getName(), fk.getField().getName())).append(";");
                 } else {
                     System.out.println("O field deve ser uma pk");
                 }
             }
         }
+
+        return sb.toString();
+    }
+
+    private static String createTabelaAssociativa(String name, Table tabela1, Table tabela2, Database database) {
+        StringBuilder sb = new StringBuilder();
+
+        if (!database.containsTable(tabela1)) {
+            sb.append(createTable(tabela1));
+        }
+
+        if (!database.containsTable(tabela2)) {
+            sb.append(createTable(tabela2));
+        }
+
+        PK pk1 = tabela1.getPrimaryKey();
+        PK pk2 = tabela2.getPrimaryKey();
+
+        if (pk1 != null && pk2 != null) {
+            sb.append("CREATE TABLE IF NOT EXISTS ").append(name).append(" (\n")
+                    .append(createField(pk1)).append("\n")
+                    .append(createField(pk2)).append("\n")
+                    .append(addForeignKey(pk1.getName(), tabela1.getName(), pk1.getName())).append(",\n")
+                    .append(addForeignKey(pk2.getName(), tabela2.getName(), pk2.getName())).append(",\n")
+                    .append("PRIMARY KEY (").append(pk1.getName()).append(", ").append(pk2.getName()).append(")\n")
+                    .append(");");
+        } else {
+            System.out.println("Não foi possível criar tabela associativa pois uma das tabelas não possuem pk.");
+        }
+
 
         return sb.toString();
     }
@@ -107,7 +135,11 @@ public class ScriptGenerator {
             }
 
             for (Table table : database.getTables()) {
-                writer.write(createPk(table) + "\n");
+                writer.write(createFk(table) + "\n");
+            }
+
+            for (TabelaAssociativa tabelaAssociativa : database.getTabelaAssociativas()) {
+                writer.write(createTabelaAssociativa(tabelaAssociativa.getName(), tabelaAssociativa.getTabela1(), tabelaAssociativa.getTabela2(), database));
             }
         } catch (Exception e) {
             System.err.println(e.getMessage());

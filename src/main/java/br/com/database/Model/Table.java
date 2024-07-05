@@ -6,7 +6,7 @@ import java.util.List;
 public class Table {
     private String name;
     private List<Field> fields = new ArrayList<>();
-    private Field primaryKey;
+    private PK primaryKey;
     private List<FK> fks = new ArrayList<>();
 
     public Table(String name) {
@@ -22,7 +22,7 @@ public class Table {
         fks.add(fk);
     }
 
-    public void addPrimaryKey(Field field) {
+    public void addPrimaryKey(PK field) {
         primaryKey = field;
     }
 
@@ -42,7 +42,7 @@ public class Table {
         this.fields = fields;
     }
 
-    public Field getPrimaryKey() {
+    public PK getPrimaryKey() {
         return primaryKey;
     }
 }
