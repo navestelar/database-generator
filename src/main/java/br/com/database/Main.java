@@ -8,11 +8,10 @@ import java.sql.SQLException;
 
 public class Main {
     public static void main(String[] args) throws SQLException {
-
+        //configurando database
         DatabaseConfig config = new DatabaseConfig("1234").user("root");
         DatabaseManager manager = new DatabaseManager(config);
-        //configurando database
-        
+
         //criando database
         manager.createDatabase("teste");
 
@@ -32,7 +31,10 @@ public class Main {
                 .addField("tabela2", "campo4", FieldType.CHAR(2))
                 .addPrimaryKey("tabela2", "pk2", FieldType.INT);
 
+        //adicionando foreign key
         manager.addForeignKey("tabela1", "tabela2", "fk", "pk");
+
+        //criando tabela associativa
         manager.createTabelaAssociativa("tabela1_tabela2", "tabela1", "tabela2");
 
         //gerando e executando o script
