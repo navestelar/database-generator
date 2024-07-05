@@ -115,12 +115,15 @@ public class ScriptGenerator {
         Field pk2 = tabela2.getPrimaryKey();
 
         if (pk1 != null && pk2 != null) {
+            Field fk1 = new Field(tabela1.getName() + "_" + pk1.getName(), pk1.getType());
+            Field fk2 = new Field(tabela2.getName() + "_" + pk2.getName(), pk2.getType());
+
             sb.append("CREATE TABLE IF NOT EXISTS ").append(name).append(" (\n")
-                    .append(createField(pk1)).append("\n")
-                    .append(createField(pk2)).append("\n")
-                    .append(addForeignKey(pk1.getName(), tabela1.getName(), pk1.getName())).append(",\n")
-                    .append(addForeignKey(pk2.getName(), tabela2.getName(), pk2.getName())).append(",\n")
-                    .append("PRIMARY KEY (").append(pk1.getName()).append(", ").append(pk2.getName()).append(")\n")
+                    .append(createField(fk1)).append("\n")
+                    .append(createField(fk2)).append("\n")
+                    .append(addForeignKey(fk1.getName(), tabela1.getName(), pk1.getName())).append(",\n")
+                    .append(addForeignKey(fk2.getName(), tabela2.getName(), pk2.getName())).append(",\n")
+                    .append("PRIMARY KEY (").append(fk1.getName()).append(", ").append(fk2.getName()).append(")\n")
                     .append(");");
         } else {
             System.out.println("Não foi possível criar tabela associativa pois uma das tabelas não possuem pk.");
