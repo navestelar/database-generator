@@ -30,6 +30,57 @@
     -Table tabela2
   }
 
+  class DatabaseConfig {
+    -String user
+    -String host
+    -String port
+    -String password
+  }
+
+  interface DatabaseConnection {
+    Connection getConnection()
+    void close()
+  }
+
+  class MySQLConnection implements DatabaseConnection {
+    -MYSQLConnection instance
+    -Connection connection
+    -DatabaseConfig dbConfig
+
+    +MySQLConnection getInstance(DatabaseConfig: dbConfig)
+    +Connection getConnection()
+    +void close()
+  }
+
+  class DatabaseManager {
+    -DatabaseConfig databaseConfig
+    -Database database
+
+    +DatabaseManager createDatabase(String: name)
+    +DatabaseManager createTable(String: tableName)
+    +DatabaseManager createField(String: tableName, String: name, FieldType: type)
+    +DatabaseManager createField(String: tableName, String: name, String: type)
+    +DatabaseManager addPrimaryKey(String: tableName, String: name, FieldType: type)
+    +DatabaseManager addPrimaryKey(String: tableName, String: name, String: type)
+    +void generateScript()
+    +void executeScript()
+  } 
+
+  class ScriptGenerator {
+    +String createDataBase(Database: database)
+    +String createTable(Table: table)
+    +String createField(Field: field)
+    +String createPrimaryKey(Table: table)
+    +String updateField(Table: table, Field: field)
+    +String selectDataBase(Database: database);
+    +void generateScript(Database database)
+    +void executeScript(DatabaseConfig: dbConfig)
+    -String addPrimaryKey(String: primaryKey)
+    -String addForeignKey(String: name, String: table, String: field)
+    -String createFK(Table: table)
+    -String createTabelaAssociativa(String: name, Table: tabela1, Table: tabela2, Database: database)
+  }
+
   class Table {
     -String name
     -List<Field> fields
@@ -37,6 +88,7 @@
     -List<ForeingKey> foreingKeys
 
     +void addField(field: Field)
+    +Field getField(String: fieldName)
     +void addForeingKey(field: ForeingKey)
   }
 
@@ -47,4 +99,27 @@
   Table "1" *-- "*" ForeingKey : contém
   TabelaAssociativa "1" o-- "1" Table : contém
   TabelaAssociativa "1" o-- "1" Table : contém
+  ScriptGenerator "1" *-- "1" MySQLConnection
+  MySQLConnection "1" *-- "1" DatabaseConfig
+  DatabaseManager "*" *-- "*" Database : contém
+  DatabaseManager ..> ScriptGenerator
+
+  ScriptGenerator ..> MySQLConnection
+  ForeingKey --|> Field
+  PrimaryKey --|> Field
+  TabelaAssociativa --|> Table
+  MySQLConnection ..> DatabaseConfig
+  ScriptGenerator ..> Table
+  ScriptGenerator ..> Field
+  ScriptGenerator ..> Database
+  ScriptGenerator ..> PrimaryKey
+  ScriptGenerator ..> ForeingKey
+  DatabaseManager ..> Table
+  DatabaseManager ..> Field
+  DatabaseManager ..> Database
+  DatabaseManager ..> PrimaryKey
+  DatabaseManager ..> ForeingKey
+  
+
+
 @enduml
