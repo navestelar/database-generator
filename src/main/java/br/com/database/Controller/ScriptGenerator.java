@@ -74,18 +74,18 @@ public class ScriptGenerator {
     private static String createFk(Table table) {
         StringBuilder sb = new StringBuilder();
 
-        List<FK> fkList = table.getFks();
+        List<ForeignKey> foreignKeyList = table.getFks();
 
-        if (fkList != null) {
-            for (FK fk : fkList) {
-                Field pkTable1 = fk.getTable().getPrimaryKey();
-                Field fieldFk = fk.getTable().getPrimaryKey();
+        if (foreignKeyList != null) {
+            for (ForeignKey foreignKey : foreignKeyList) {
+                Field pkTable1 = foreignKey.getTable().getPrimaryKey();
+                Field fieldFk = foreignKey.getTable().getPrimaryKey();
 
                 if (pkTable1 != null && fieldFk != null && pkTable1.getName().equals(fieldFk.getName())) {
-                    sb.append(updateField(table, new Field(fk.getName(), fk.getField().getType())) + "\n");
+                    sb.append(updateField(table, new Field(foreignKey.getName(), foreignKey.getField().getType())) + "\n");
                     sb.append("ALTER TABLE ").append(table.getName())
-                            .append(" ADD CONSTRAINT ").append(fk.getName()).append(" ")
-                            .append(addForeignKey(fk.getName(), fk.getTable().getName(), fk.getField().getName()))
+                            .append(" ADD CONSTRAINT ").append(foreignKey.getName()).append(" ")
+                            .append(addForeignKey(foreignKey.getName(), foreignKey.getTable().getName(), foreignKey.getField().getName()))
                             .append(";");
                 } else {
                     System.out.println("O field deve ser uma pk");

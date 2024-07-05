@@ -7,11 +7,11 @@ public enum FieldType {
     INTEGER,
     INT;
 
-    public static String VARCHAR(int length) {
+    public static FieldType VARCHAR(int length) {
         return "VARCHAR(" + length + ")";
     } 
 
-    public static String CHAR(int length) {
+    public static FieldType CHAR(int length) {
         return "CHAR(" + length + ")";
     }
 

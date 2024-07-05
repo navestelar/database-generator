@@ -6,8 +6,8 @@ import java.util.List;
 public class Table {
     private String name;
     private List<Field> fields = new ArrayList<>();
-    private Field primaryKey;
-    private List<FK> fks = new ArrayList<>();
+    private PrimaryKey primaryKey;
+    private List<ForeignKey> foreignKeys = new ArrayList<>();
 
     public Table(String name) {
         this.name = name;
@@ -18,11 +18,11 @@ public class Table {
     }
 
     public void addFk(String name, Table table, Field field) {
-        FK fk = new FK(name, table, field);
-        fks.add(fk);
+        ForeignKey foreignKey = new ForeignKey(name, table, field);
+        foreignKeys.add(foreignKey);
     }
 
-    public void addPrimaryKey(Field field) {
+    public void addPrimaryKey(PrimaryKey field) {
         primaryKey = field;
     }
 
@@ -35,14 +35,14 @@ public class Table {
     public List<Field> getFields() {
         return fields;
     }
-    public List<FK> getFks() {
-        return fks;
+    public List<ForeignKey> getFks() {
+        return foreignKeys;
     }
     public void setFields(List<Field> fields) {
         this.fields = fields;
     }
 
-    public Field getPrimaryKey() {
+    public PrimaryKey getPrimaryKey() {
         return primaryKey;
     }
 }

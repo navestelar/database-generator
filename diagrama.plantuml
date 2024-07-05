@@ -1,4 +1,4 @@
-@startuml TutorialYoutube
+@startuml Diagrama
   class Database {
     -String Name
     -List<Table> tables

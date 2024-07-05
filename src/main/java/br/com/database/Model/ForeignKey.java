@@ -1,11 +1,11 @@
 package br.com.database.Model;
 
-public class FK {
+public class ForeignKey {
     private String name;
     private Table table;
     private Field field;
 
-    public FK(String name, Table table, Field field) {
+    public ForeignKey(String name, Table table, Field field) {
         this.name = name;
         this.table = table;
         this.field = field;

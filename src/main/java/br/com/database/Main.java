@@ -2,10 +2,7 @@ package br.com.database;
 
 import br.com.database.Config.DatabaseConfig;
 import br.com.database.Controller.DatabaseManager;
-import br.com.database.Model.Database;
-import br.com.database.Model.Field;
 import br.com.database.Model.FieldType;
-import br.com.database.Model.Table;
 
 import java.sql.SQLException;
 
@@ -17,22 +14,20 @@ public class Main {
         //configurando database
         
         //criando database
-        Database database = manager.createDatabase("teste");
+        manager.createDatabase("teste");
 
         //criando tabela
-        Table table = manager.createTable("tabela1");
+        manager.createTable("tabela1");
 
         //criando campo
-        Field field = manager.createField(table, "id", FieldType.INT);
-        manager.createField(table, "campo1", FieldType.VARCHAR(20));
-        manager.createField(table, "campo2", FieldType.VARCHAR(23));
-        manager.createField(table, "campo3", FieldType.CHAR(2));
-        
-        //adicionando primary key
-        table.addPrimaryKey(field);
+        manager.addField("tabela1", "id", FieldType.INT)
+                .addField("tabela1", "campo1", FieldType.VARCHAR(20))
+                .addField("tabela1", "campo2", FieldType.VARCHAR(23))
+                .addField("tabela1", "campo3", FieldType.CHAR(2));
 
-        //adicionando tabela ao database
-        database.addTable(table);
+        //adicionando primary key
+        manager.addPrimaryKey("tabela1", "pk", FieldType.VARCHAR(20));
+
 
         //gerando e executando o script
         manager.generateScript(database);
