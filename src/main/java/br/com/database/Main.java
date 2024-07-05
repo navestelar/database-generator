@@ -1,42 +1,45 @@
 package br.com.database;
 
 import br.com.database.Config.DatabaseConfig;
-import br.com.database.Config.DatabaseConnectionFactory;
-import br.com.database.Config.DatabaseType;
-import br.com.database.Controller.ScriptGenerator;
-import br.com.database.Model.*;
+import br.com.database.Controller.DatabaseManager;
+import br.com.database.Model.Database;
+import br.com.database.Model.Field;
+import br.com.database.Model.FieldType;
+import br.com.database.Model.Table;
 
 import java.sql.SQLException;
 
 public class Main {
     public static void main(String[] args) throws SQLException {
-        DatabaseConfig.init(DatabaseType.MYSQL, "root", "1234", "localhost", "3306");
 
-        Database database = new Database("teste");
+        DatabaseConfig config = new DatabaseConfig("1234").user("root");
+        DatabaseManager manager = new DatabaseManager(config);
+        //configurando database
+        
+        //criando database
+        Database database = manager.createDatabase("teste");
 
-        Table table1 = new Table("tabela1");
-        PK pk = new PK("id", FieldType.INT);
-        table1.addField(new Field("nome", FieldType.VARCHAR));
-        table1.addPrimaryKey(pk);
-        Field teste = new Field("teste",FieldType.VARCHAR);
+        //criando tabela
+        Table table = manager.createTable("tabela1");
 
-        database.addTable(table1);
+        //criando campo
+        Field field = manager.createField(table, "id", FieldType.INT);
+        manager.createField(table, "campo1", FieldType.VARCHAR(20));
+        manager.createField(table, "campo2", FieldType.VARCHAR(23));
+        manager.createField(table, "campo3", FieldType.CHAR(2));
+        
+        //adicionando primary key
+        table.addPrimaryKey(field);
 
-        Table table2 = new Table("tabela2");
-        Field field2 = new Field("codigo", FieldType.INT);
-        table2.addField(field2);
-        table2.addField(new Field("descricao", FieldType.VARCHAR));
-        table2.addPrimaryKey(new PK("pk", FieldType.INT));
+        //adicionando tabela ao database
+        database.addTable(table);
 
-        table2.addField(new Field("descricao2", FieldType.VARCHAR));
+        //gerando e executando o script
+        manager.generateScript(database);
+        manager.executeScricpt();
 
-        database.addTable(table2);
-        table2.addFk("fk", table1, pk);
-
-        database.addTabelaAssociativa(new TabelaAssociativa("teste", table1, table2));
-
-        ScriptGenerator.generateScript(database);
-        ScriptGenerator.executeScript(DatabaseConnectionFactory.getInstance().getConnection());
+    
+        
     }
 
 }

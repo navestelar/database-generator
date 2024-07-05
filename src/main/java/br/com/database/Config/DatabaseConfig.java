@@ -1,41 +1,73 @@
 package br.com.database.Config;
 
 public class DatabaseConfig {
-    private static DatabaseType databaseType;
-    private static String user;
-    private static String host;
-    private static String port;
-    private static String password;
 
-    public static void init(DatabaseType databaseType, String user, String password, String host, String port) {
-        DatabaseConfig.databaseType = databaseType;
-        DatabaseConfig.user = user;
-        DatabaseConfig.password = password;
-        DatabaseConfig.host = host;
-        DatabaseConfig.port = port;
+    private String user = "root";
+    private String host = "localhost";
+    private String port = "3306";
+    private String password;
+
+    public DatabaseConfig(String password) {
+        this.password =  password;
     }
 
-    public static String getUrl(String driver) {
+    public DatabaseConfig user(String user) {
+        this.user = user;
+        return this;
+    }
+
+    public DatabaseConfig host(String host) {
+        this.host = host;
+        return this;
+    }
+
+    public DatabaseConfig port(String port) {
+        this.port = port;
+        return this;
+    }
+
+    public String getUrl(String driver) {
         return driver + "://" + host + ":" + port;
     }
 
-    public static DatabaseType getDatabaseType() {
-        return databaseType;
-    }
-
-    public static String getUser() {
+    public String getUser() {
         return user;
     }
 
-    public static String getPassword() {
-        return password;
+    public void setUser(String user) {
+        this.user = user;
     }
 
-    public static String getHost() {
+    public String getHost() {
         return host;
     }
 
-    public static String getPort() {
+    public void setHost(String host) {
+        this.host = host;
+    }
+
+    public String getPort() {
         return port;
     }
+
+    public void setPort(String port) {
+        this.port = port;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+
+    @Override
+    public String toString() {
+        return "DatabaseConfig [user=" + user + ", host=" + host + ", port=" + port + ", password=" + password + "]";
+    }
+
+    
+
 }

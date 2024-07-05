@@ -1,12 +1,15 @@
 package br.com.database.Controller;
 
-import br.com.database.Model.*;
+import br.com.database.Config.DatabaseConfig;
+import br.com.database.Config.MySQLConnection;
+import br.com.database.Model.Database;
+import br.com.database.Model.Field;
+import br.com.database.Model.Table;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
@@ -17,9 +20,9 @@ public class ScriptGenerator {
     public static String createDataBase(Database database) {
         return "CREATE DATABASE IF NOT EXISTS " + database.getName() + ";";
     }
-    
+
     public static String createField(Field field) {
-         return field.getName() + " " + field.getType() + ", ";
+        return field.getName() + " " + field.getType() + ", ";
     }
 
     private static String addPrimaryKey(String primaryKey) {
@@ -48,18 +51,18 @@ public class ScriptGenerator {
     }
 
     public static String createTable(Table table) {
-            StringBuilder sb = new StringBuilder();
-            sb.append("CREATE TABLE ").append(table.getName()).append(" (");
+        StringBuilder sb = new StringBuilder();
+        sb.append("CREATE TABLE ").append(table.getName()).append(" (");
 
-            for (Field field : table.getFields()) {
-                sb.append(createField(field));
-            }
+        for (Field field : table.getFields()) {
+            sb.append(createField(field));
+        }
 
-            sb.append(createPrimaryKey(table));
+        sb.append(createPrimaryKey(table));
 
-            sb.setLength(sb.length() - 2);
-            sb.append(");");
-            return sb.toString();
+        sb.setLength(sb.length() - 2);
+        sb.append(");");
+        return sb.toString();
     }
 
     public static String updateField(Table table, Field field) {
@@ -82,9 +85,10 @@ public class ScriptGenerator {
 
                 if (pkTable1 != null && fieldFk != null && pkTable1.getName().equals(fieldFk.getName())) {
                     sb.append(updateField(table, new Field(fk.getName(), fk.getField().getType())) + "\n");
-                    sb.append("ALTER TABLE ").append( table.getName())
+                    sb.append("ALTER TABLE ").append(table.getName())
                             .append(" ADD CONSTRAINT ").append(fk.getName()).append(" ")
-                            .append(addForeignKey(fk.getName(), fk.getTable().getName(), fk.getField().getName())).append(";");
+                            .append(addForeignKey(fk.getName(), fk.getTable().getName(), fk.getField().getName()))
+                            .append(";");
                 } else {
                     System.out.println("O field deve ser uma pk");
                 }
@@ -120,13 +124,12 @@ public class ScriptGenerator {
             System.out.println("Não foi possível criar tabela associativa pois uma das tabelas não possuem pk.");
         }
 
-
         return sb.toString();
     }
 
     public static void generateScript(Database database) {
         try (FileWriter writer = new FileWriter(filePath)) {
-           
+
             writer.write(createDataBase(database) + "\n");
             writer.write(selectDataBase(database) + "\n");
 
@@ -139,17 +142,18 @@ public class ScriptGenerator {
             }
 
             for (TabelaAssociativa tabelaAssociativa : database.getTabelaAssociativas()) {
-                writer.write(createTabelaAssociativa(tabelaAssociativa.getName(), tabelaAssociativa.getTabela1(), tabelaAssociativa.getTabela2(), database));
+                writer.write(createTabelaAssociativa(tabelaAssociativa.getName(), tabelaAssociativa.getTabela1(),
+                        tabelaAssociativa.getTabela2(), database));
             }
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
     }
 
-    public static void executeScript(Connection connection) {
+    public static void executeScript(DatabaseConfig dbconfig) {
         try {
             String script = new String(Files.readAllBytes(Paths.get(filePath)));
-            Statement statement = connection.createStatement();
+            Statement statement = MySQLConnection.getInstance(dbconfig).getConnection().createStatement();
             for (String sql : script.split(";")) {
                 if (!sql.trim().isEmpty()) {
                     statement.execute(sql.trim() + ";");

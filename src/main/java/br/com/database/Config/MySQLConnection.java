@@ -5,21 +5,28 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class MySQLConnection implements DatabaseConnection {
-    private final Connection connection;
-    private static MySQLConnection instance;
 
-    public MySQLConnection() throws SQLException {
+    private static MySQLConnection instance;
+    private final Connection connection;
+    private DatabaseConfig dbConfig;
+    
+
+    public MySQLConnection(DatabaseConfig dbConfig) throws SQLException {
+        this.dbConfig = dbConfig;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(DatabaseConfig.getUrl("jdbc:mysql"), DatabaseConfig.getUser(), DatabaseConfig.getPassword());
+            connection = DriverManager.getConnection(dbConfig.getUrl("jdbc:mysql"), dbConfig.getUser(), dbConfig.getPassword());
+
         } catch (ClassNotFoundException | SQLException e) {
+            System.err.println("Error initializing MySQL connection: " + e.getMessage());
+            e.printStackTrace(); // Imprime o stack trace completo para diagnóstico
             throw new SQLException("Error initializing MySQL connection", e);
         }
     }
 
-    public static MySQLConnection getInstance() throws SQLException {
+    public static MySQLConnection getInstance(DatabaseConfig dbConfig) throws SQLException {
         if (instance == null) {
-            instance = new MySQLConnection();
+            instance = new MySQLConnection(dbConfig);
         }
         return instance;
     }
