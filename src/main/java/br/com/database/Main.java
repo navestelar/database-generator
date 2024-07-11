@@ -13,7 +13,7 @@ public class Main {
         DatabaseManager manager = new DatabaseManager(config);
 
         //criando database
-        manager.createDatabase("teste");
+        manager.createDatabase("teste2");
 
         //criando tabela
         manager.createTable("tabela1");

@@ -67,7 +67,4 @@ public class DatabaseConfig {
     public String toString() {
         return "DatabaseConfig [user=" + user + ", host=" + host + ", port=" + port + ", password=" + password + "]";
     }
-
-    
-
 }

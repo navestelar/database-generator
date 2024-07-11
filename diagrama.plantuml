@@ -107,7 +107,6 @@
   ScriptGenerator ..> MySQLConnection
   ForeingKey --|> Field
   PrimaryKey --|> Field
-  TabelaAssociativa --|> Table
   MySQLConnection ..> DatabaseConfig
   ScriptGenerator ..> Table
   ScriptGenerator ..> Field
